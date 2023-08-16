@@ -1,0 +1,21 @@
+[project]
+name = "torch-cgd"
+description = "A fast and memory-saving implementation of competitive gradient descent in PyTorch"
+version = "0.0.0"
+readme = "README.md"
+authors = [
+    {name = "Thomas Wagenaar", email = "wagenaartje@protonmail.com"}
+]
+dependencies = [
+    "torch"
+]
+
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+
+[project.urls]
+repository = "https://github.com/wagenaartje/torch-cgd"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

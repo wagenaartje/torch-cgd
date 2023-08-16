@@ -1,0 +1,9 @@
+__pycache__
+build
+dist
+torch_cgd.egg-info
+benchmark
+
+# For building and testing
+build.bat
+upload.bat
