@@ -62,7 +62,7 @@ D = nn.Sequential(nn.Linear(1, 40), nn.ReLU(), nn.Linear(40, 1))
 
 # Initialize the optimizer
 solver = torch_cgd.solvers.GMRES(tol=1e-7, atol=1e-20)
-optimizer = torch_cgd.ACGD_CG(G.parameters(), D.parameters(), 1e-3, solver=solver)
+optimizer = torch_cgd.ACGD(G.parameters(), D.parameters(), 1e-3, solver=solver)
 
 # Training loop
 for i in range(10000):
