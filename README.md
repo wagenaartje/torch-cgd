@@ -1,12 +1,16 @@
-# torch-cgd 🤺
-A fast and memory-efficient implementation of Competitive Gradient Descent (CGD) for PyTorch. The algorithm was originally proposed in [this paper](https://arxiv.org/abs/1905.12103), but a more robust and adaptive version was proposed in [this paper](https://arxiv.org/abs/1910.05852). This implementation is essentially a fork of [devzhk's `cgd-package`](https://github.com/devzhk/cgds-package), but the code has been heavily refactored for readability and customizability. You can install this package with `pip`: 
+<img src="https://i.imgur.com/vzeaPSt.png">
+
+### torch-cgd
+<p><a href="https://badge.fury.io/py/torch-cgd"><img src="https://badge.fury.io/py/torch-cgd.svg" alt="PyPI version" height="18"></a>
+
+A fast and memory-efficient implementation of Adaptive Competitive Gradient Descent (ACGD) for PyTorch. The non-adaptive version of the algorithm was originally proposed in [this paper](https://arxiv.org/abs/1905.12103), but the adaptive version was proposed in [this paper](https://arxiv.org/abs/1910.05852). This repository is essentially a fork of [devzhk's `cgd-package`](https://github.com/devzhk/cgds-package), but the code has been heavily refactored for readability and customizability. You can install this package with `pip`: 
 
 ```
 pip install torch-cgd
 ```
 
 ## Get started
-You can use CGD for any competitive game of the form $\min_x f(x,y) \min_y g(x,y)$, i.e. games where players are minimizing objectives that are related and conflicting. While the possibilities are endless, you can also use it to replace your conventional loss function such as the `mse` loss with a competitive loss function. This can be beneficial because competitive loss functions can stimulate your network to have a more uniform error over the samples. The following code blocks show an example of this replacement for a network mapping $y=\sin(x)$.
+You can use ACGD for any competitive losses of the form $\min_x \min_y f(x,y)$, in other words those where one player tries to minimize the loss and another player tries to maximize the loss. You can for example use it to replace your conventional loss function such as the `mse` loss with a competitive loss function. This can be beneficial because competitive loss functions can stimulate your network to have a more uniform error over the samples. The following code blocks show an example of this replacement for a network mapping $y=\sin(x)$.
 
 
 ### 1. Original, MSE-based gradient descent
@@ -85,7 +89,7 @@ If you use this code for your research, please cite it as follows:
 ```
 @misc{torch-cgd,
   author = {Thomas Wagenaar},
-  title = {torch-cgd: A fast and memory-efficient implementation of competitive gradient descent in PyTorch},
+  title = {torch-cgd: A fast and memory-efficient implementation of adaptive competitive gradient descent in PyTorch},
   year = {2023},
   url = {https://github.com/wagenaartje/torch-cgd}
 }

@@ -8,7 +8,6 @@ def zero_grad (params):
 
 def ith_element (params, index):
     for p in params:
-        # numel = 6, index = 5 is ok
         if torch.numel(p) < index + 1:
             index -= torch.numel(p)
         else:

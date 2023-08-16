@@ -32,7 +32,7 @@ for i in range(10000):
     d_out = D(x)
 
     loss_d = (d_out* (g_out - y)).mean() # Discriminator: maximize
-    loss_g = -loss_d             # Generator: minimize
+    loss_g = -loss_d                     # Generator: minimize
 
     optimizer.step(loss_d)
 
