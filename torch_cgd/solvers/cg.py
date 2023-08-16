@@ -1,6 +1,6 @@
 import torch
 
-class conjugate_gradient:
+class CG:
     def __init__ (self, tol=1e-10, atol=1e-16):
         '''  Conjugate gradient method, implementation based on
             https://en.wikipedia.org/wiki/Conjugate_gradient_method.

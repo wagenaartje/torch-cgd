@@ -19,7 +19,7 @@ x = torch.linspace(0,2*torch.pi,N).reshape(N,1)
 y = torch.sin(x)
 
 # Optimizer
-solver = torch_cgd.solvers.conjugate_gradient(tol=1e-7, atol=1e-20)
+solver = torch_cgd.solvers.CG(tol=1e-7, atol=1e-20)
 optimizer = torch_cgd.CGD_CG(G.parameters(), D.parameters(), lr, solver=solver)
 # Training loop
 epoch = 0

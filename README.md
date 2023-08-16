@@ -79,6 +79,22 @@ for i in range(10000):
     print(i, mse)
 ```
 
+### Choosing the right solver
+One of the steps in ACGD involves inverting a matrix, for which many different methods exist. This library offers two different solvers, namely the Conjugate Gradient method (CG) and the Generalized Minimum RESidual method (GMRES). You can initially them, for example, as follows:
+
+```python
+solver = torch_cgd.solvers.CG(tol=1e-7, atol=1e-20)
+solver = torch_cgd.solvers.GMRES(tol=1e-7, atol=1e-20)
+```
+
+Which you can then pass to the ACGD optimizer as follows:
+
+```python
+optimizer = torch_cgd.ACGD(..., solver=solver)
+```
+
+From my own experience, the best results are obtained with GMRES. Currently, a direct solver is not available yet for ACGD, but it is for CGD. Note that using a direct solver is considerably slower and more memory intensive already for smaller network sizes. 
+
 ## Examples
 See the [examples folder](https://github.com/wagenaartje/torch-cgd/tree/main/examples).
 

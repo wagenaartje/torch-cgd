@@ -1,2 +1,2 @@
-from .cgm import conjugate_gradient
+from .cg import CG
 from .gmres import GMRES
