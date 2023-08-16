@@ -10,41 +10,10 @@ pip install torch-cgd
 ```
 
 ## Get started
-You can use ACGD for any competitive losses of the form $\min_x \min_y f(x,y)$, in other words those where one player tries to minimize the loss and another player tries to maximize the loss. You can for example use it to replace your conventional loss function such as the `mse` loss with a competitive loss function. This can be beneficial because competitive loss functions can stimulate your network to have a more uniform error over the samples. The following code blocks show an example of this replacement for a network trying to learn the function $y=\sin(x)$.
+You can use ACGD for any competitive losses of the form $\min_x \min_y f(x,y)$, in other words those where one player tries to minimize the loss and another player tries to maximize the loss. You can for example use it to replace your conventional loss function such as the `mse` loss with a competitive loss function. This can be beneficial because competitive loss functions can stimulate your network to have a more uniform error over the samples. 
 
-
-#### 1. Conventional MSE-based gradient descent
-```python
-import torch.nn as nn
-import torch
-
-# Create the dataset
-N = 100
-x = torch.linspace(0,2*torch.pi,N).reshape(N,1)
-y = torch.sin(x)
-
-# Create the model
-G = nn.Sequential(nn.Linear(1, 50), nn.Tanh(), nn.Linear(50, 1))
-
-# Initialize the optimizer
-optimizer = torch.optim.Adam(G.parameters(), lr=1e-3)
-
-# Training loop
-for i in range(10000):
-    optimizer.zero_grad()
-
-    g_out = G(x)
-
-    loss = ((g_out - y)**2).mean() # Calculate mse
-    loss.backward()
-    optimizer.step()
-
-    print(i, loss.item())
-```
-
-
-#### 2. Adaptive competitive gradient descent
-We now instead define the loss as $D(x) (G(x) - y)$, where the term within brackets is the error of the generator with respect to the target solution. In other words, the loss represents how well the discriminator is able to estimate the errors of the generator. As a result, a competitive game arises.
+### Example
+The following code block show an example of this replacement for a network trying to learn the function $y=\sin(x)$. Define the loss as $D(x) (G(x) - y)$, where the term within brackets is the error of the generator with respect to the target solution. In other words, the loss represents how well the discriminator is able to estimate the errors of the generator. As a result, a competitive game arises.
 
 ```python
 import torch.nn as nn
@@ -95,7 +64,7 @@ optimizer = torch_cgd.ACGD(..., solver=solver)
 
 From my own experience, the best results are obtained with GMRES. Currently, a direct solver is not available yet for ACGD, but it is for CGD. Note that using a direct solver is considerably slower and more memory intensive already for smaller network sizes. 
 
-## Examples
+## More examples
 See the [examples folder](https://github.com/wagenaartje/torch-cgd/tree/main/examples).
 
 
