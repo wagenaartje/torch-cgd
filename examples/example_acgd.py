@@ -20,7 +20,7 @@ y = torch.sin(x)
 
 # Optimizer
 solver = torch_cgd.solvers.conjugate_gradient(tol=1e-7, atol=1e-20)
-optimizer = torch_cgd.ACGD_CG(G.parameters(), D.parameters(), lr, solver=solver)
+optimizer = torch_cgd.ACGD(G.parameters(), D.parameters(), lr, solver=solver)
 
 # Training loop
 epoch = 0
@@ -37,4 +37,3 @@ for i in range(10000):
     optimizer.step(loss_d)
 
     print(loss_d.item(), torch.mean((g_out - y)**2).item())
-
