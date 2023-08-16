@@ -10,10 +10,10 @@ pip install torch-cgd
 ```
 
 ## Get started
-You can use ACGD for any competitive losses of the form $\min_x \min_y f(x,y)$, in other words those where one player tries to minimize the loss and another player tries to maximize the loss. You can for example use it to replace your conventional loss function such as the `mse` loss with a competitive loss function. This can be beneficial because competitive loss functions can stimulate your network to have a more uniform error over the samples. The following code blocks show an example of this replacement for a network mapping $y=\sin(x)$.
+You can use ACGD for any competitive losses of the form $\min_x \min_y f(x,y)$, in other words those where one player tries to minimize the loss and another player tries to maximize the loss. You can for example use it to replace your conventional loss function such as the `mse` loss with a competitive loss function. This can be beneficial because competitive loss functions can stimulate your network to have a more uniform error over the samples. The following code blocks show an example of this replacement for a network trying to learn the function $y=\sin(x)$.
 
 
-### 1. Original, MSE-based gradient descent
+#### 1. Conventional MSE-based gradient descent
 ```python
 import torch.nn as nn
 import torch
@@ -43,7 +43,7 @@ for i in range(10000):
 ```
 
 
-### 2. Competitive gradient descent
+#### 2. Adaptive competitive gradient descent
 We now instead define the loss as $D(x) (G(x) - y)$, where the term within brackets is the error of the generator with respect to the target solution. In other words, the loss represents how well the discriminator is able to estimate the errors of the generator. As a result, a competitive game arises.
 
 ```python
