@@ -1,15 +1,16 @@
 import torch
 
 class GMRES:
-    def __init__ (self, tol=1e-10, atol=1e-16):
+    def __init__ (self, tol=1e-10, atol=1e-16, max_iter=1000):
         '''  Conjugate gradient method, implementation based on
             https://en.wikipedia.org/wiki/Conjugate_gradient_method.
             Only works for positive definite matrices A! '''
 
         self.tol = tol
         self.atol = atol
+        self.max_iter = max_iter
     
-    def solve (self, A, b, x0=None, max_iter=1000):
+    def solve (self, A, b, x0=None):
         ''' Extremely important that none of the vectors requires grad. '''
         # Transform inputs
         b = torch.reshape(b, (-1, 1))
@@ -24,18 +25,18 @@ class GMRES:
         r_tol = self.tol * torch.norm(b)
 
         new_v, rnorm = _safe_normalize(r)
-        beta = torch.zeros(max_iter + 1, device=b.device)
+        beta = torch.zeros(self.max_iter + 1, device=b.device)
         beta[0] = rnorm
 
         
 
         V = []
         V.append(new_v)
-        H = torch.zeros((max_iter + 1, max_iter + 1), device=b.device)
-        cs = torch.zeros(max_iter, device=b.device)  # cosine values at each step
-        ss = torch.zeros(max_iter, device=b.device)  # sine values at each step
+        H = torch.zeros((self.max_iter + 1, self.max_iter + 1), device=b.device)
+        cs = torch.zeros(self.max_iter, device=b.device)  # cosine values at each step
+        ss = torch.zeros(self.max_iter, device=b.device)  # sine values at each step
         
-        for j in range(max_iter):
+        for j in range(self.max_iter):
             p = A @ V[j]
 
             new_v = arnoldi(p, V, H, j + 1)  # Arnoldi iteration to get the j+1 th batch
@@ -48,8 +49,8 @@ class GMRES:
             if residual < r_tol or residual < self.atol:
                 break
 
-        if j == max_iter - 1:
-            print('Warning: GMRES did not converge in {} iterations'.format(max_iter))
+        if j == self.max_iter - 1:
+            print('Warning: GMRES did not converge in {} iterations'.format(self.max_iter))
 
         # y = torch.linalg.solve_triangular(H[0:j + 1, 0:j + 1], beta[0:j + 1].unsqueeze(-1), upper=True)  # j x j
         # WARNING! Above version does not work on older pytorch versions. So we use deprecated one.

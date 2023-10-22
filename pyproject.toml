@@ -1,7 +1,7 @@
 [project]
 name = "torch-cgd"
 description = "A fast and memory-saving implementation of competitive gradient descent in PyTorch"
-version = "0.0.1"
+version = "0.0.2"
 readme = "README.md"
 authors = [
     {name = "Thomas Wagenaar", email = "wagenaartje@protonmail.com"}

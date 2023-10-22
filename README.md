@@ -53,7 +53,7 @@ One of the steps in ACGD involves inverting a matrix, for which many different m
 
 ```python
 solver = torch_cgd.solvers.CG(tol=1e-7, atol=1e-20)
-solver = torch_cgd.solvers.GMRES(tol=1e-7, atol=1e-20)
+solver = torch_cgd.solvers.GMRES(tol=1e-7, atol=1e-20, max_iter=1000)
 ```
 
 Which you can then pass to the ACGD optimizer as follows:
